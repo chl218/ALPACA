@@ -1,5 +1,6 @@
 all:
-	gcc -o server server.cpp -lwiringPi -lpthread
+	gcc -o tcp_server tcp_server.cpp -lwiringPi -lpthread
+	gcc -o udp_server udp_server.cpp -lwiringPi -lpthread
 
 clean:
-	rm server
+	rm tcp_server udp_server

@@ -22,6 +22,13 @@
 
 #define PORTNO 5001
 
+#define PARAM_LEN 8
+
+// {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
+#define SCREEN_WIDTH 0
+#define SCREEN_WIDTH 0
+#define DEMO 7
+
 void initializePins() {
    softPwmCreate(PIN_00, 0x00, 0xFF);
    softPwmCreate(PIN_01, 0x00, 0xFF);
@@ -74,6 +81,46 @@ void drawLED(int xCrd, int yCrd, int gradient) {
 }
 
 
+void drawHLine(int row, int b, int e) {
+   for(int j = b; j < e; i++) {
+      drawLED(row, j, 255);
+   }
+}
+
+void drawVLine(int row, int b, int e) {
+   for(int j = b; j < e; i++) {
+      drawLED(row, j, 255);
+   }
+}
+
+
+// draw box
+void demo1(int amt) {
+   int currW = WIDTH/2;
+   int currH = HEIGHT/2;
+
+   int wOffset = currW;
+   int hOffset = currH;
+
+   do {
+
+      while(currW > 0 || currH > 0) {     
+         drawHLine(wOffset - currW, 0, currW);
+         drawHLine(currW + hOffset, 0, currW);
+         
+      }
+   } while(--amt);
+
+}
+
+void demo2(int amt) {
+
+}
+
+void demo3(int amt) {
+
+}
+
 int main(int argc, char *argv[]) {
 
    if(DEBUG) printf("Hello ALPACA\n");
@@ -108,9 +155,11 @@ int main(int argc, char *argv[]) {
    
    //inet_ntop(AF_INET, &(serv_addr.sin_addr.s_addr), buffer, 256);
 
-   // {screenWidth, screenHeight, xCrd, yCrd, isOn, gradient}
-   int prevState[6] = {0, 0, 0, 0, 1, 0};
-   int currState[6] = {0};
+   // {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
+   int prevState[PARAM_LEN] = {0};
+   int currState[PARAM_LEN] = {0};
+
+   prevState[4] = 1;
 
    while(1) {
       // Now start listening for the clients, here process will
@@ -132,39 +181,51 @@ int main(int argc, char *argv[]) {
          perror("ERROR reading from socket");
          exit(1);
       }
-      //printf("Here is the message: %s", buffer);
+      printf("Here is the message: %s", buffer);
       
       // tokenize rece msg
       char *token = strtok(buffer, " ");
-      for(int i = 0; i < 6; i++) {
+      for(int i = 0; i < PARAM_LEN; i++) {
          currState[i] = atoi(token);
          token = strtok(NULL,  " ");
       }
 
-      // transform range to led grid resolution
-      currState[2] = rangeTransform(currState[2], currState[0],  WIDTH);
-      currState[3] = rangeTransform(currState[3], currState[1], HEIGHT);
-      currState[5] = rangeTransform(currState[5], 100, 0xFF);
- 
-      if(DEBUG) {
-         printf("after rangeTransform: ");
-         for(int i = 0; i < 5; i++) {
-            printf("%2d ", currState[i]);
-         }
-         printf("0x%x\n", currState[5]);
-      }
 
-      // turn current led on, turn previous led off
-      if(currState[4]) {
-         drawLED(prevState[2], prevState[3], prevState[5]);
-         drawLED(currState[2], currState[3], currState[5]);
+      if(currState[DEMO] == 0) {
+         // transform range to led grid resolution
+         currState[2] = rangeTransform(currState[2], currState[0],  WIDTH);
+         currState[3] = rangeTransform(currState[3], currState[1], HEIGHT);
+         currState[5] = rangeTransform(currState[5], 100, 0xFF);
+    
+         if(DEBUG) {
+            printf("after rangeTransform: ");
+            for(int i = 0; i < 5; i++) {
+               printf("%2d ", currState[i]);
+            }
+            printf("0x%x\n", currState[5]);
+         }
+
+         // turn current led on, turn previous led off
+         if(currState[4]) {
+            drawLED(prevState[2], prevState[3], prevState[5]);
+            drawLED(currState[2], currState[3], currState[5]);
+         }
+         else {
+            drawLED(prevState[2], prevState[3], 0x00);
+         }
       }
       else {
-         drawLED(prevState[2], prevState[3], 0x00);
-      }
-      
+         switch(currState[DEMO]) {
+            case 1: demo1(currState[DEMO_AMOUNT]);
+            case 2: demo2(currState[DEMO_AMOUNT]);
+            case 3: demo3(currState[DEMO_AMOUNT]);
+            default: break;
+         }
+      }      
+
+
       // save current state informations
-      for(int i = 0; i < 6; i++) {
+      for(int i = 0; i < PARAM_LEN; i++) {
          prevState[i] = currState[i];
       }
 
