@@ -3,138 +3,39 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\97bea490b534a5f3dc55955eef5c6e75e078041e\output\jars\classes.jar"
+        jar="C:\Users\Jack\.android\build-cache\3ae9cdf15269f8b64fdbe6d25c267ca1d8f5905e\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_44f5d728b2cdc6d708e358e2f68ba1ca4346e6ec\classes.dex" />
+        sha1="7113302c965566b66df46c6ca75ea301576114a5">
+        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_08142e68ae78bbc2883f39f2fe716d4cacabb274\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\48738b2e33051a39f5fabf1f436ef83c7b40effb\output\jars\classes.jar"
+        jar="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d35f4c9f95f20ebb84e350736140725121902bb3\classes.dex" />
+        sha1="32b23b01f7776668e4553fa164aec8768338ee5e">
+        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4c5ecd3e82697c5bdc0903ad998279dc7274d484\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\eeced6d27b9ae7491d35827d2ccfaf02359d37e2\output\jars\classes.jar"
+        jar="C:\Users\Jack\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.1\constraint-layout-solver-1.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ae356cd068db79b20957dce133afb30b8dc00f5e\classes.dex" />
+        sha1="1ad79631209e77b0a2730fc112b4cc0c66a95132">
+        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.1_76b060e58a53bfd791eccc75852ba75f0bc6f477\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\e30c8238158e77ba65c3a15b0b95179bd88cd2d3\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_abf5c771b89c081d24617a98f2ab9aefa7f021b7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\508f00d8ce5f9765fdc95d2eb2e47b7c3bc4e621\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0e2112adc88077f2e6e0b8bae65d3cf6eb99df61\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\20534708903afd5c516e4ee9efc82f32f8773b47\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2ddaed1454b987488a64ae944b80b31f0f2467ab\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\c82014f890679026521ed4f1912f9bcdc585c542\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_198c449784c0cf9773e328f0885ebd9160fc20c5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\1c2ec2f8fae04e2ffbbca16b01645fc291389b5c\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e51c2f662bb72419632af5192553c37e33890a99">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9be4e3805b5caaca084d6696670b72df541280fa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\78e49c80aac88650c899c6a07f5d2830ae51a5b2\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_76008eaa23a313bdc79d4ea6cef94c1d1c599ba2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\9065f976ae40447c606f0180f9eae66eceab1836\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_db7acae7a2cc03454e3bb892a587752ff7954bb1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_dd3cf206a9ed8b38ec231439a6ab5ab388450b3e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\c26994fb30e6fdfb2c300101862655cd1880371c\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c6e0624fb50607c3398debaccab496dba928e00c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\.android\build-cache\09ecd90bd444b4faa91eb461dabf964168b6a8f3\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7ba6d7cee15daf76002cbad83b4e015a9a88782d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.2.0\support-annotations-25.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.2.0_375bc87cc0e4a051f18712857825daa27901843e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5a431ba47a47a68b2dec4a1e034e079046aecc19">
-        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-app\ScreenCoordinates\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_85b50b3c448dde893f11a3a24d6adf2db8121722\classes.dex" />
+        <dex dex="C:\Users\Jack\AndroidStudioProjects\ALPACA\android-client\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_26c72f60f921bf9ccb30a287b550e13dbb81673f\classes.dex" />
     </item>
 
 </items>

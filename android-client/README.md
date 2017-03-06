@@ -1,1 +1,0 @@
-# Android-Coordinates-and-Gradient
