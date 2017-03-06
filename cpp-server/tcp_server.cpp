@@ -15,22 +15,22 @@
 #include <softPwm.h>
 #include "interface.h"
 
-#define WIDTH      16
-#define HEIGHT     9
-
-#define DEBUG 0
+#define DEBUG 1
 
 #define PORTNO 5001
 
-#define PARAM_LEN 8
-
-// {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
-#define SCREEN_WIDTH  100
-#define SCREEN_HEIGHT 100
-#define DEMO 7
-
 #define NUM_OF_ROWS 6 // # of rows in LED matrix    (full = 9)
 #define NUM_OF_COLS 4 // # of columns in lED matrix (full = 16)
+
+// {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo}
+#define PARAM_LEN     7
+#define SCREEN_WIDTH  0
+#define SCREEN_HEIGHT 1
+#define X_COORD       2
+#define Y_COORD       3
+#define LED_ON        4
+#define LED_GRADIENT  5
+#define DEMO          6
 
 // sets up all the row and column pins to output
 void initializePins() {
@@ -52,14 +52,6 @@ void initializePins() {
     pinMode(PIN_R6, OUTPUT);
     pinMode(PIN_R7, OUTPUT);
     pinMode(PIN_R8, OUTPUT);
-}
-
-int rangeTransform(int oldVal, int oldRange, int newRange) {
-   // OldRange = (OldMax - OldMin)  
-   // NewRange = (NewMax - NewMin)  
-   // NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
-   //printf("\trangeTransform: oldVal %d oldRange: %d newRange: %d\n", oldVal, oldRange, newRange);
-   return (((oldVal - 0) * newRange) / oldRange) + 0;
 }
 
 // Selects the row to light up
@@ -355,76 +347,65 @@ void selectC(int sel) {
 }
 
 // Turns on the LED at specified row and column
-// note: Delay not accounted for, needs to include delay manually
-//       usually delay(2) is good enough
+// note: Delay not accounted for, needs to include delay manually 
+//       after call to select(), usually delay(2) is good enough
 void select(int row, int col) {
     selectR(row % NUM_OF_ROWS);
     selectC(col % NUM_OF_COLS);
 }
 
+int rangeTransform(int oldVal, int oldRange, int newRange) {
+   return ((oldVal * newRange) / oldRange) - 0.5;
+}
+
 // Draws the LED on the board based on the xy coordinates in
 // relation to the screen width and height
 // note: Delay is already accounted for
-void drawLED(int xCrd, int yCrd, int gradient) {
+void drawLED(int xCrd, int yCrd, int screenWidth, int screenHeight, int gradient) {
    //softPwmWrite(xCrd * yCrd,  gradient);
-   float blkH = SCREEN_HEIGHT / NUM_OF_ROWS;
-   float blkW = SCREEN_WIDTH  / NUM_OF_COLS;
-   float row = ((float) yCrd / SCREEN_HEIGHT * NUM_OF_ROWS) - 0.5;
-   float col = ((float) xCrd / SCREEN_WIDTH  * NUM_OF_COLS) - 0.5;
+   //int row = rangeTransform(yCrd, screenHeight, NUM_OF_ROWS);
+   //int col = rangeTransform(xCrd, screenWidth,  NUM_OF_COLS);
+   int row = ((float) yCrd / screenHeight * NUM_OF_ROWS) - 0.5;
+   int col = ((float) xCrd / screenWidth  * NUM_OF_COLS) - 0.5;
 
    if (DEBUG) {
       printf("xCrd is %d, yCrd is %d\t", xCrd, yCrd);
-      printf("Drawing row %.2f, col %.2f\n", row, col);
+      printf("Drawing row %d, col %d\n", row, col);
    }
 
    // turn on selected LED
-   select((int) row, (int) col); delay(2);
-
-/*
-   bool nextRow = row - (int) row >= 0.5;
-   bool nextCol = col - (int) col >= 0.5;
-
-   // check if coordinates falls into multiple LEDS
-   if (nextRow) {
-      select(row + 1, col    ); delay(2);
-   }
-   if (nextCol) {
-      select(row    , col + 1); delay(2);
-   }
-   if (nextRow & nextCol) {
-      select(row + 1, col + 1); delay(2);
-   }
-*/
+   select(row, col); delay(2);
 }
 
+/*
 void drawHLine(int row, int b, int e) {
    for(int i = b; i < e; i++) {
-      drawLED(row, i, 255);
+      drawLED(row, i, 255); // needs screen height and width
    }
 }
 
 void drawVLine(int row, int b, int e) {
    for(int i = b; i < e; i++) {
-      drawLED(row, i, 255);
+      drawLED(row, i, 255); // needs screen height and width
    }
 }
+*/
 
 // draw box
 void demo1(int amt) {
-   do {
-      for (int j = 0; j < NUM_OF_ROWS; j++) {
-         for (int i = 0; i < NUM_OF_COLS; i++) {
-            if ((j == 0) | (j == NUM_OF_ROWS - 1)) {
-               select(j, i); delay(1);
-            }
-            else {
-               select(j, 0); delay(1);
-               select(j, NUM_OF_COLS - 1); delay(1);
-               break;
-            }
+   int delay_dur = 1;
+   for (int j = 0; j < NUM_OF_ROWS; j++) {
+      for (int i = 0; i < NUM_OF_COLS; i++) {
+         if ((j == 0) | (j == NUM_OF_ROWS - 1)) {
+            select(j, i); delay(delay_dur);
+         }
+         else {
+            select(j, 0); delay(delay_dur);
+            select(j, NUM_OF_COLS - 1); delay(delay_dur);
+            break;
          }
       }
-   } while(--amt);
+   }
 }
 
 void demo2(int amt) {
@@ -444,26 +425,23 @@ void displayFallingRain(int col) {
     select(5,col); delay(200);
 }
 
-void displayAllCoords() {
-   for (int i = 0; i < SCREEN_WIDTH; i++) {
-      for (int j = 0; j < SCREEN_HEIGHT; j++) {
-         drawLED(i, j, 255);
+void displayAllCoords(int screenWidth, int screenHeight) {
+   for (int i = 0; i < screenWidth; i++) {
+      for (int j = 0; j < screenHeight; j++) {
+         drawLED(i, j, screenWidth, screenHeight, 255);
       }
    }
 }
 
 int main(int argc, char *argv[]) {
-
-   if(DEBUG) printf("Hello ALPACA\n");
-
    initializePins();
    wiringPiSetup();
 
    int counter = 0;
-   while(1) {
+   while(DEBUG) {
       //displayFallingRain(counter); counter++;
       demo1(1);
-      //displayAllCoords();
+      //displayAllCoords(100, 100);
    }
 
    int sockfd; 
@@ -491,13 +469,8 @@ int main(int argc, char *argv[]) {
       exit(1);
    }
    
-   //inet_ntop(AF_INET, &(serv_addr.sin_addr.s_addr), buffer, 256);
-
    // {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
-   int prevState[PARAM_LEN] = {0};
    int currState[PARAM_LEN] = {0};
-
-   prevState[4] = 1;
 
    while(1) {
       // Now start listening for the clients, here process will
@@ -529,7 +502,7 @@ int main(int argc, char *argv[]) {
          token = strtok(NULL,  " ");
       }
 
-
+/*
       if(currState[DEMO] == 0) {
          // transform range to led grid resolution
          currState[2] = rangeTransform(currState[2], currState[0],  NUM_OF_COLS);
@@ -558,7 +531,7 @@ int main(int argc, char *argv[]) {
       for(int i = 0; i < PARAM_LEN; i++) {
          prevState[i] = currState[i];
       }
-
+*/
    }
    
    return 0;
