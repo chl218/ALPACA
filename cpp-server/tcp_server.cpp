@@ -18,54 +18,40 @@
 #define WIDTH      16
 #define HEIGHT     9
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define PORTNO 5001
 
 #define PARAM_LEN 8
 
 // {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
-#define SCREEN_WIDTH 0
-#define SCREEN_WIDTH 0
+#define SCREEN_WIDTH  100
+#define SCREEN_HEIGHT 100
 #define DEMO 7
 
+#define NUM_OF_ROWS 6 // # of rows in LED matrix    (full = 9)
+#define NUM_OF_COLS 4 // # of columns in lED matrix (full = 16)
+
+// sets up all the row and column pins to output
 void initializePins() {
-   softPwmCreate(PIN_00, 0x00, 0xFF);
-   softPwmCreate(PIN_01, 0x00, 0xFF);
-   softPwmCreate(PIN_02, 0x00, 0xFF);
-   softPwmCreate(PIN_03, 0x00, 0xFF);
-   softPwmCreate(PIN_04, 0x00, 0xFF);
-   softPwmCreate(PIN_05, 0x00, 0xFF);
-   softPwmCreate(PIN_06, 0x00, 0xFF);
-   softPwmCreate(PIN_07, 0x00, 0xFF);
-   softPwmCreate(PIN_08, 0x00, 0xFF);
-   softPwmCreate(PIN_09, 0x00, 0xFF);
-   
-   softPwmCreate(PIN_10, 0x00, 0xFF);
-   softPwmCreate(PIN_11, 0x00, 0xFF);
-   softPwmCreate(PIN_12, 0x00, 0xFF);
-   softPwmCreate(PIN_13, 0x00, 0xFF);
-   softPwmCreate(PIN_14, 0x00, 0xFF);
-   softPwmCreate(PIN_15, 0x00, 0xFF);
-   softPwmCreate(PIN_16, 0x00, 0xFF);
-   softPwmCreate(PIN_17, 0x00, 0xFF);
-   softPwmCreate(PIN_18, 0x00, 0xFF);
-   softPwmCreate(PIN_19, 0x00, 0xFF);
+    pinMode(PIN_C_B0, OUTPUT);
+    pinMode(PIN_C_B1, OUTPUT);
+    pinMode(PIN_C_B2, OUTPUT);
+    pinMode(PIN_C_B3, OUTPUT);
+    pinMode(PIN_C_B4, OUTPUT);
+    pinMode(PIN_C_B5, OUTPUT);
+    pinMode(PIN_C14, OUTPUT);
+    pinMode(PIN_C15, OUTPUT);
 
-   softPwmCreate(PIN_20, 0x00, 0xFF);
-   softPwmCreate(PIN_21, 0x00, 0xFF);
-   softPwmCreate(PIN_22, 0x00, 0xFF);
-   softPwmCreate(PIN_23, 0x00, 0xFF);
-   softPwmCreate(PIN_24, 0x00, 0xFF);
-   softPwmCreate(PIN_25, 0x00, 0xFF);
-   softPwmCreate(PIN_26, 0x00, 0xFF);
-   softPwmCreate(PIN_27, 0x00, 0xFF);
-   softPwmCreate(PIN_28, 0x00, 0xFF);
-   softPwmCreate(PIN_29, 0x00, 0xFF);
-
-   softPwmCreate(PIN_30, 0x00, 0xFF);
-   softPwmCreate(PIN_31, 0x00, 0xFF);
-
+    pinMode(PIN_R0, OUTPUT);
+    pinMode(PIN_R1, OUTPUT);
+    pinMode(PIN_R2, OUTPUT);
+    pinMode(PIN_R3, OUTPUT);
+    pinMode(PIN_R4, OUTPUT);
+    pinMode(PIN_R5, OUTPUT);
+    pinMode(PIN_R6, OUTPUT);
+    pinMode(PIN_R7, OUTPUT);
+    pinMode(PIN_R8, OUTPUT);
 }
 
 int rangeTransform(int oldVal, int oldRange, int newRange) {
@@ -76,41 +62,369 @@ int rangeTransform(int oldVal, int oldRange, int newRange) {
    return (((oldVal - 0) * newRange) / oldRange) + 0;
 }
 
-void drawLED(int xCrd, int yCrd, int gradient) {
-   softPwmWrite(xCrd * yCrd,  gradient);
+// Selects the row to light up
+void selectR(int sel) {
+    switch(sel) {
+    case 0:
+        digitalWrite(PIN_R0, HIGH);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 1:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, HIGH);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 2:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, HIGH);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 3:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, HIGH);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 4:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, HIGH);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 5:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, HIGH);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 6:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, HIGH);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 7:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, HIGH);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    case 8:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, HIGH);
+        break;
+    default:
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+        break;
+    }
 }
 
+// Selects the column to light up
+void selectC(int sel) {
+    switch(sel) {
+    case 0:
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 1:
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, HIGH);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 2:
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, HIGH);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 3:
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, HIGH);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 4:
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, HIGH);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 5:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, HIGH);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 6:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, HIGH);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 7:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, HIGH);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 8:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, HIGH);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 9:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, HIGH);
+        digitalWrite(PIN_C_B3, HIGH);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 10:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, HIGH);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, HIGH);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 11:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, HIGH);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, HIGH);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 12:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, HIGH);
+        digitalWrite(PIN_C_B4, HIGH);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 13:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, HIGH);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, HIGH);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 14:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, HIGH);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    case 15:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, HIGH);
+        break;
+    default:
+        digitalWrite(PIN_C_B0, LOW);
+        digitalWrite(PIN_C_B1, LOW);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+        break;
+    }
+}
+
+// Turns on the LED at specified row and column
+// note: Delay not accounted for, needs to include delay manually
+//       usually delay(2) is good enough
+void select(int row, int col) {
+    selectR(row % NUM_OF_ROWS);
+    selectC(col % NUM_OF_COLS);
+}
+
+// Draws the LED on the board based on the xy coordinates in
+// relation to the screen width and height
+// note: Delay is already accounted for
+void drawLED(int xCrd, int yCrd, int gradient) {
+   //softPwmWrite(xCrd * yCrd,  gradient);
+   float blkH = SCREEN_HEIGHT / NUM_OF_ROWS;
+   float blkW = SCREEN_WIDTH  / NUM_OF_COLS;
+   float row = ((float) yCrd / SCREEN_HEIGHT * NUM_OF_ROWS) - 0.5;
+   float col = ((float) xCrd / SCREEN_WIDTH  * NUM_OF_COLS) - 0.5;
+
+   if (DEBUG) {
+      printf("xCrd is %d, yCrd is %d\t", xCrd, yCrd);
+      printf("Drawing row %.2f, col %.2f\n", row, col);
+   }
+
+   // turn on selected LED
+   select((int) row, (int) col); delay(2);
+
+/*
+   bool nextRow = row - (int) row >= 0.5;
+   bool nextCol = col - (int) col >= 0.5;
+
+   // check if coordinates falls into multiple LEDS
+   if (nextRow) {
+      select(row + 1, col    ); delay(2);
+   }
+   if (nextCol) {
+      select(row    , col + 1); delay(2);
+   }
+   if (nextRow & nextCol) {
+      select(row + 1, col + 1); delay(2);
+   }
+*/
+}
 
 void drawHLine(int row, int b, int e) {
-   for(int j = b; j < e; i++) {
-      drawLED(row, j, 255);
+   for(int i = b; i < e; i++) {
+      drawLED(row, i, 255);
    }
 }
 
 void drawVLine(int row, int b, int e) {
-   for(int j = b; j < e; i++) {
-      drawLED(row, j, 255);
+   for(int i = b; i < e; i++) {
+      drawLED(row, i, 255);
    }
 }
 
-
 // draw box
 void demo1(int amt) {
-   int currW = WIDTH/2;
-   int currH = HEIGHT/2;
-
-   int wOffset = currW;
-   int hOffset = currH;
-
    do {
-
-      while(currW > 0 || currH > 0) {     
-         drawHLine(wOffset - currW, 0, currW);
-         drawHLine(currW + hOffset, 0, currW);
-         
+      for (int j = 0; j < NUM_OF_ROWS; j++) {
+         for (int i = 0; i < NUM_OF_COLS; i++) {
+            if ((j == 0) | (j == NUM_OF_ROWS - 1)) {
+               select(j, i); delay(1);
+            }
+            else {
+               select(j, 0); delay(1);
+               select(j, NUM_OF_COLS - 1); delay(1);
+               break;
+            }
+         }
       }
    } while(--amt);
-
 }
 
 void demo2(int amt) {
@@ -121,11 +435,36 @@ void demo3(int amt) {
 
 }
 
+void displayFallingRain(int col) {
+    select(0,col); delay(200);
+    select(1,col); delay(200);
+    select(2,col); delay(200);
+    select(3,col); delay(200);
+    select(4,col); delay(200);
+    select(5,col); delay(200);
+}
+
+void displayAllCoords() {
+   for (int i = 0; i < SCREEN_WIDTH; i++) {
+      for (int j = 0; j < SCREEN_HEIGHT; j++) {
+         drawLED(i, j, 255);
+      }
+   }
+}
+
 int main(int argc, char *argv[]) {
 
    if(DEBUG) printf("Hello ALPACA\n");
 
    initializePins();
+   wiringPiSetup();
+
+   int counter = 0;
+   while(1) {
+      //displayFallingRain(counter); counter++;
+      demo1(1);
+      //displayAllCoords();
+   }
 
    int sockfd; 
    socklen_t newsockfd, clilen;
@@ -138,7 +477,6 @@ int main(int argc, char *argv[]) {
    serv_addr.sin_family = AF_INET;
    serv_addr.sin_addr.s_addr = INADDR_ANY;
    serv_addr.sin_port = htons(PORTNO);
-
 
    // First call to socket() function
    sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -181,7 +519,8 @@ int main(int argc, char *argv[]) {
          perror("ERROR reading from socket");
          exit(1);
       }
-      printf("Here is the message: %s", buffer);
+
+      if (DEBUG) printf("Here is the message: %s", buffer);
       
       // tokenize rece msg
       char *token = strtok(buffer, " ");
@@ -193,8 +532,8 @@ int main(int argc, char *argv[]) {
 
       if(currState[DEMO] == 0) {
          // transform range to led grid resolution
-         currState[2] = rangeTransform(currState[2], currState[0],  WIDTH);
-         currState[3] = rangeTransform(currState[3], currState[1], HEIGHT);
+         currState[2] = rangeTransform(currState[2], currState[0],  NUM_OF_COLS);
+         currState[3] = rangeTransform(currState[3], currState[1], NUM_OF_ROWS);
          currState[5] = rangeTransform(currState[5], 100, 0xFF);
     
          if(DEBUG) {
@@ -214,28 +553,12 @@ int main(int argc, char *argv[]) {
             drawLED(prevState[2], prevState[3], 0x00);
          }
       }
-      else {
-         switch(currState[DEMO]) {
-            case 1: demo1(currState[DEMO_AMOUNT]);
-            case 2: demo2(currState[DEMO_AMOUNT]);
-            case 3: demo3(currState[DEMO_AMOUNT]);
-            default: break;
-         }
-      }      
-
 
       // save current state informations
       for(int i = 0; i < PARAM_LEN; i++) {
          prevState[i] = currState[i];
       }
 
-      /* Write a response to the client */
-      // char msg[] = "I got your message\n";
-      // n = write(newsockfd, msg, strlen(msg));
-      // if (n < 0) {
-      //    perror("ERROR writing to socket");
-      //    exit(1);
-      // }
    }
    
    return 0;
