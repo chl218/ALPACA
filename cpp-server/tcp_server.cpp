@@ -15,7 +15,8 @@
 #include <softPwm.h>
 #include "interface.h"
 
-#define DEBUG 1
+#define DEBUG     0
+#define DEBUG_LED 0
 
 #define PORTNO 5001
 
@@ -361,14 +362,14 @@ int rangeTransform(int oldVal, int oldRange, int newRange) {
 // Draws the LED on the board based on the xy coordinates in
 // relation to the screen width and height
 // note: Delay is already accounted for
-void drawLED(int xCrd, int yCrd, int screenWidth, int screenHeight, int gradient) {
+void displayLED(int xCrd, int yCrd, int screenWidth, int screenHeight, int gradient) {
    //softPwmWrite(xCrd * yCrd,  gradient);
    //int row = rangeTransform(yCrd, screenHeight, NUM_OF_ROWS);
    //int col = rangeTransform(xCrd, screenWidth,  NUM_OF_COLS);
    int row = ((float) yCrd / screenHeight * NUM_OF_ROWS) - 0.5;
    int col = ((float) xCrd / screenWidth  * NUM_OF_COLS) - 0.5;
 
-   if (DEBUG) {
+   if (DEBUG_LED) {
       printf("xCrd is %d, yCrd is %d\t", xCrd, yCrd);
       printf("Drawing row %d, col %d\n", row, col);
    }
@@ -380,19 +381,19 @@ void drawLED(int xCrd, int yCrd, int screenWidth, int screenHeight, int gradient
 /*
 void drawHLine(int row, int b, int e) {
    for(int i = b; i < e; i++) {
-      drawLED(row, i, 255); // needs screen height and width
+      displayLED(row, i, 255); // needs screen height and width
    }
 }
 
 void drawVLine(int row, int b, int e) {
    for(int i = b; i < e; i++) {
-      drawLED(row, i, 255); // needs screen height and width
+      displayLED(row, i, 255); // needs screen height and width
    }
 }
 */
 
 // draw box
-void demo1(int amt) {
+void runDemo0() {
    int delay_dur = 1;
    for (int j = 0; j < NUM_OF_ROWS; j++) {
       for (int i = 0; i < NUM_OF_COLS; i++) {
@@ -408,12 +409,10 @@ void demo1(int amt) {
    }
 }
 
-void demo2(int amt) {
-
+void runDemo1() {
 }
 
-void demo3(int amt) {
-
+void runDemo2() {
 }
 
 void displayFallingRain(int col) {
@@ -428,7 +427,7 @@ void displayFallingRain(int col) {
 void displayAllCoords(int screenWidth, int screenHeight) {
    for (int i = 0; i < screenWidth; i++) {
       for (int j = 0; j < screenHeight; j++) {
-         drawLED(i, j, screenWidth, screenHeight, 255);
+         displayLED(i, j, screenWidth, screenHeight, 255);
       }
    }
 }
@@ -438,9 +437,11 @@ int main(int argc, char *argv[]) {
    wiringPiSetup();
 
    int counter = 0;
-   while(DEBUG) {
+   while(DEBUG_LED) {
       //displayFallingRain(counter); counter++;
-      demo1(1);
+      runDemo0();
+      //runDemo1();
+      //runDemo2();
       //displayAllCoords(100, 100);
    }
 
@@ -469,7 +470,7 @@ int main(int argc, char *argv[]) {
       exit(1);
    }
    
-   // {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, DemoAmount}
+   // { PARAM_LEN, SCREEN_WIDTH, SCREEN_HEIGHT, X_COORD, Y_COORD, LED_ON, LED_GRADIENT, DEMO }
    int currState[PARAM_LEN] = {0};
 
    while(1) {
@@ -494,7 +495,7 @@ int main(int argc, char *argv[]) {
       }
 
       if (DEBUG) printf("Here is the message: %s", buffer);
-      
+
       // tokenize rece msg
       char *token = strtok(buffer, " ");
       for(int i = 0; i < PARAM_LEN; i++) {
@@ -502,37 +503,29 @@ int main(int argc, char *argv[]) {
          token = strtok(NULL,  " ");
       }
 
-/*
       if(currState[DEMO] == 0) {
-         // transform range to led grid resolution
-         currState[2] = rangeTransform(currState[2], currState[0],  NUM_OF_COLS);
-         currState[3] = rangeTransform(currState[3], currState[1], NUM_OF_ROWS);
-         currState[5] = rangeTransform(currState[5], 100, 0xFF);
-    
-         if(DEBUG) {
-            printf("after rangeTransform: ");
-            for(int i = 0; i < 5; i++) {
-               printf("%2d ", currState[i]);
-            }
-            printf("0x%x\n", currState[5]);
-         }
-
-         // turn current led on, turn previous led off
-         if(currState[4]) {
-            drawLED(prevState[2], prevState[3], prevState[5]);
-            drawLED(currState[2], currState[3], currState[5]);
-         }
-         else {
-            drawLED(prevState[2], prevState[3], 0x00);
+         // turn LED on if isLEDOn is true
+         if ( currState[LED_ON] ) {
+            displayLED( currState[X_COORD], currState[Y_COORD],
+                        currState[SCREEN_WIDTH], currState[SCREEN_HEIGHT], currState[LED_GRADIENT] );
          }
       }
-
-      // save current state informations
-      for(int i = 0; i < PARAM_LEN; i++) {
-         prevState[i] = currState[i];
+      else {
+         switch (currState[DEMO]) {
+            case 0:
+               runDemo0();
+               break;
+            case 1:
+               runDemo1();
+               break;
+            case 2:
+               runDemo2();
+               break;
+            default:
+               break;
+         }
       }
-*/
    }
-   
+
    return 0;
 }
