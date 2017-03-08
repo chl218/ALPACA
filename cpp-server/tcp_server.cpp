@@ -14,17 +14,18 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include "interface.h"
+#include <time.h>
 
-#define DEBUG     0
-#define DEBUG_LED 0
+#define DEBUG     1
+#define DEBUG_LED 1
 
 #define PORTNO 5001
 
 #define NUM_OF_ROWS 6 // # of rows in LED matrix    (full = 9)
 #define NUM_OF_COLS 4 // # of columns in lED matrix (full = 16)
 
-// {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo}
-#define PARAM_LEN     7
+// {screenWidth, screenHeight, xCrd, yCrd, isLEDOn, LEDgradient, demo, demoLength}
+#define PARAM_LEN     8
 #define SCREEN_WIDTH  0
 #define SCREEN_HEIGHT 1
 #define X_COORD       2
@@ -32,6 +33,7 @@
 #define LED_ON        4
 #define LED_GRADIENT  5
 #define DEMO          6
+#define DEMO_LENGTH   7
 
 // sets up all the row and column pins to output
 void initializePins() {
@@ -57,6 +59,18 @@ void initializePins() {
 
 // Selects the row to light up
 void selectR(int sel) {
+    if ( sel > NUM_OF_ROWS ) {
+        digitalWrite(PIN_R0, LOW);
+        digitalWrite(PIN_R1, LOW);
+        digitalWrite(PIN_R2, LOW);
+        digitalWrite(PIN_R3, LOW);
+        digitalWrite(PIN_R4, LOW);
+        digitalWrite(PIN_R5, LOW);
+        digitalWrite(PIN_R6, LOW);
+        digitalWrite(PIN_R7, LOW);
+        digitalWrite(PIN_R8, LOW);
+    }
+    else {
     switch(sel) {
     case 0:
         digitalWrite(PIN_R0, HIGH);
@@ -169,10 +183,22 @@ void selectR(int sel) {
         digitalWrite(PIN_R8, LOW);
         break;
     }
+    }
 }
 
 // Selects the column to light up
 void selectC(int sel) {
+    if ( sel > NUM_OF_COLS ) {
+        digitalWrite(PIN_C_B0, HIGH);
+        digitalWrite(PIN_C_B1, HIGH);
+        digitalWrite(PIN_C_B2, LOW);
+        digitalWrite(PIN_C_B3, LOW);
+        digitalWrite(PIN_C_B4, LOW);
+        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C14, LOW);
+        digitalWrite(PIN_C15, LOW);
+    }
+    else {
     switch(sel) {
     case 0:
         digitalWrite(PIN_C_B0, HIGH);
@@ -345,14 +371,15 @@ void selectC(int sel) {
         digitalWrite(PIN_C15, LOW);
         break;
     }
+    }
 }
 
 // Turns on the LED at specified row and column
 // note: Delay not accounted for, needs to include delay manually 
 //       after call to select(), usually delay(2) is good enough
 void select(int row, int col) {
-    selectR(row % NUM_OF_ROWS);
-    selectC(col % NUM_OF_COLS);
+    selectR(row);
+    selectC(col);
 }
 
 int rangeTransform(int oldVal, int oldRange, int newRange) {
@@ -472,6 +499,7 @@ int main(int argc, char *argv[]) {
    
    // { PARAM_LEN, SCREEN_WIDTH, SCREEN_HEIGHT, X_COORD, Y_COORD, LED_ON, LED_GRADIENT, DEMO }
    int currState[PARAM_LEN] = {0};
+   select(NUM_OF_ROWS, NUM_OF_COLS); delay (1);
 
    while(1) {
       // Now start listening for the clients, here process will
@@ -509,17 +537,31 @@ int main(int argc, char *argv[]) {
             displayLED( currState[X_COORD], currState[Y_COORD],
                         currState[SCREEN_WIDTH], currState[SCREEN_HEIGHT], currState[LED_GRADIENT] );
          }
+         else {
+            select(NUM_OF_ROWS, NUM_OF_COLS); delay (1);
+         }
       }
       else {
+         clock_t t = clock();
+         clock_t duration  = CLOCKS_PER_SEC * currState[DEMO_LENGTH];
          switch (currState[DEMO]) {
-            case 0:
-               runDemo0();
-               break;
             case 1:
-               runDemo1();
+               while (1) {
+                  runDemo0();
+                  if ( clock() - t > duration ) { break; }
+               }
                break;
             case 2:
-               runDemo2();
+               while (1) {
+                  runDemo1();
+                  if ( clock() - t > duration ) { break; }
+               }
+               break;
+            case 3:
+               while (1) {
+                  runDemo2();
+                  if ( clock() - t > duration ) { break; }
+               }
                break;
             default:
                break;
