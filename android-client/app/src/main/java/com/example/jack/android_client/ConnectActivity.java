@@ -98,7 +98,7 @@ public class ConnectActivity extends AppCompatActivity {
       buttonDemo2.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            int amount = Integer.parseInt(editTextDemo1.getText().toString());
+            int amount = Integer.parseInt(editTextDemo2.getText().toString());
             if(amount < 1) amount = 1;
             String addr = editTextAddr.getText().toString();
             int    port = Integer.parseInt(editTextPort.getText().toString());
@@ -114,7 +114,7 @@ public class ConnectActivity extends AppCompatActivity {
       buttonDemo3.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            int amount = Integer.parseInt(editTextDemo1.getText().toString());
+            int amount = Integer.parseInt(editTextDemo3.getText().toString());
             if( amount < 1) amount = 1;
             String addr = editTextAddr.getText().toString();
             int    port = Integer.parseInt(editTextPort.getText().toString());
