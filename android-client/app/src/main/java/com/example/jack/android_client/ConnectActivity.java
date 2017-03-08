@@ -26,6 +26,44 @@ public class ConnectActivity extends AppCompatActivity {
    private EditText editTextDemo3;
 
 
+   private String getAddress() {
+      String addr;
+      try {
+         addr = editTextAddr.getText().toString();
+      }
+      catch(Exception e) {
+         addr = "127.0.0.1";
+      }
+
+      return addr;
+   }
+
+   private int getPort() {
+      int port;
+      try {
+         port = Integer.parseInt(editTextPort.getText().toString());
+      }
+      catch (Exception e) {
+         port = 22;
+      }
+      if(port < 0) port = 22;
+
+      return port;
+   }
+
+   private int getDuration(EditText et) {
+      int duration;
+      try {
+         duration =  Integer.parseInt(et.getText().toString());
+      }
+      catch (Exception e) {
+         duration = 1;
+      }
+      if(duration < 0) duration = 1;
+
+      return duration;
+   }
+
    void promptError() {
       Context context = getApplicationContext();
       CharSequence text = "Network Error";
@@ -57,8 +95,8 @@ public class ConnectActivity extends AppCompatActivity {
       buttonConnect.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            String addr = editTextAddr.getText().toString();
-            int    port = Integer.parseInt(editTextPort.getText().toString());
+            String addr = getAddress();
+            int    port = getPort();
 
             Intent intent = new Intent(ConnectActivity.this, DrawActivity.class);
             intent.putExtra("skip", false);
@@ -81,13 +119,13 @@ public class ConnectActivity extends AppCompatActivity {
       buttonDemo1.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            int amount = Integer.parseInt(editTextDemo1.getText().toString());
-            if(amount < 1) amount = 1;
-            String addr = editTextAddr.getText().toString();
-            int    port = Integer.parseInt(editTextPort.getText().toString());
+            String addr = getAddress();
+            int    port = getPort();
+
+            int duration = getDuration(editTextDemo1);
 
             try {
-               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 1, amount);
+               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 1, duration);
                client.execute();
             }
             catch(Exception e) {
@@ -98,12 +136,13 @@ public class ConnectActivity extends AppCompatActivity {
       buttonDemo2.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            int amount = Integer.parseInt(editTextDemo2.getText().toString());
-            if(amount < 1) amount = 1;
-            String addr = editTextAddr.getText().toString();
-            int    port = Integer.parseInt(editTextPort.getText().toString());
+            String addr = getAddress();
+            int    port = getPort();
+
+            int duration = getDuration(editTextDemo2);
+
             try {
-               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 2, amount);
+               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 2, duration);
                client.execute();
             }
             catch(Exception e) {
@@ -114,13 +153,13 @@ public class ConnectActivity extends AppCompatActivity {
       buttonDemo3.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            int amount = Integer.parseInt(editTextDemo3.getText().toString());
-            if( amount < 1) amount = 1;
-            String addr = editTextAddr.getText().toString();
-            int    port = Integer.parseInt(editTextPort.getText().toString());
+            String addr = getAddress();
+            int    port = getPort();
+
+            int duration = getDuration(editTextDemo3);
 
             try {
-               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 3, amount);
+               UDPClient client = new UDPClient(addr, port, -1, -1, -1, -1, -1, -1, 3, duration);
                client.execute();
             }
             catch(Exception e) {
