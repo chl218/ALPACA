@@ -22,9 +22,9 @@
 #define PHONE_HEIGHT  1
 #define PHONE_XCRD    2
 #define PHONE_YCRD    3
-#define LED_ON			 4
+#define LED_STATUS	 4
 #define LED_GRADIENT  5
-#define DEMO_ON  	    6
+#define DEMO_STATUS   6
 #define DEMO_DURATION 7
 
 
@@ -40,6 +40,9 @@ void drawLED(int xCrd, int yCrd, int gradient) {
 
 }
 
+void runDemo1() {}
+void runDemo2() {}
+void runDemo3() {}
 
 int main(int argc, char **argv) {
    struct sockaddr_in myaddr;             /* our address */
@@ -47,7 +50,7 @@ int main(int argc, char **argv) {
    socklen_t addrlen = sizeof(remaddr);   /* length of addresses */
    int recvlen;                           /* # bytes received */
    int fd;                                /* our socket */
-   unsigned char buf[BUFSIZE];            /* receive buffer */
+   char buf[BUFSIZE];            /* receive buffer */
    
    /* create a UDP socket */
    if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -71,6 +74,7 @@ int main(int argc, char **argv) {
    /* now loop, receiving data and printing what we received */
    while(1) {
       
+
 		printf("waiting on port %d\n", PORT);
       recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
       printf("received %d bytes\n", recvlen);
@@ -81,7 +85,7 @@ int main(int argc, char **argv) {
    
 		// tokenize recv msg
 		int inputbuf[INPUTSIZE] = {0};
-      char *token = strtok(buffer, " ");
+      char *token = strtok(buf, " ");
       for(int i = 0; i < INPUTSIZE; i++) {
          inputbuf[i] = atoi(token);
          token = strtok(NULL,  " ");
@@ -92,15 +96,15 @@ int main(int argc, char **argv) {
 		int xCrd 		  = rangeTransform(inputbuf[PHONE_XCRD], inputbuf[PHONE_WIDTH], LED_WIDTH);
 		int yCrd			  = rangeTransform(inputbuf[PHONE_YCRD], inputbuf[PHONE_HEIGHT], LED_HEIGHT);
 		int isLEDOn		  = inputbuf[LED_STATUS];
-		int LEDGradiant  = inputbuf[LED_DURATION];
-		int isDemo		  = inputbuf[DEMO_STATUS];
+		int LEDGradiant  = inputbuf[LED_GRADIENT];
+		int demoStatus	  = inputbuf[DEMO_STATUS];
 		int demoDuration = inputbuf[DEMO_DURATION];
 
 		if(isLEDOn) {
 
 		}
 		else {
-			switch(demo) {
+			switch(demoStatus) {
 				case 1: runDemo1(); break;
 				case 2: runDemo2(); break;
 				case 3: runDemo3(); break;
