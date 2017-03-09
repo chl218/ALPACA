@@ -2,10 +2,15 @@ package com.example.jack.android_client;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -24,6 +29,25 @@ public class DrawActivity extends AppCompatActivity {
 
    private boolean skip;
    private int demo;
+
+
+   public int getDisplayContentHeight() {
+      final WindowManager windowManager = getWindowManager();
+      final Point size = new Point();
+      int screenHeight = 0, actionBarHeight = 0;
+      if (getActionBar() != null) {
+         actionBarHeight = getActionBar().getHeight();
+      }
+      int contentTop = ((ViewGroup) findViewById(android.R.id.content)).getTop();
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+         windowManager.getDefaultDisplay().getSize(size);
+         screenHeight = size.y;
+      } else {
+         Display d = windowManager.getDefaultDisplay();
+         screenHeight = d.getHeight();
+      }
+      return screenHeight - contentTop - actionBarHeight;
+   }
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +84,8 @@ public class DrawActivity extends AppCompatActivity {
             UDPClient myClient;
 
             int width  = Resources.getSystem().getDisplayMetrics().widthPixels;
-            int height = Resources.getSystem().getDisplayMetrics().heightPixels;
+            //int height = Resources.getSystem().getDisplayMetrics().heightPixels;
+            int height = getDisplayContentHeight();
 
             int currXCrd = (int)event.getX();
             int currYCrd = (int)event.getY();
@@ -75,8 +100,8 @@ public class DrawActivity extends AppCompatActivity {
                                               port,
                                               width,
                                               height,
-                                              (int) event.getX(),
-                                              (int) event.getY(),
+                                              (int) event.getX() < 0 ? 0 : (int) event.getX(),
+                                              (int) event.getY() < 0 ? 0 : (int) event.getY(),
                                               1,
                                               seekBar.getProgress());
                      myClient.execute();
@@ -90,8 +115,8 @@ public class DrawActivity extends AppCompatActivity {
                                               port,
                                               width,
                                               height,
-                                              (int) event.getX(),
-                                              (int) event.getY(),
+                                              (int) event.getX() < 0 ? 0 : (int) event.getX(),
+                                              (int) event.getY() < 0 ? 0 : (int) event.getY(),
                                               1,
                                               seekBar.getProgress());
                      myClient.execute();
@@ -106,8 +131,8 @@ public class DrawActivity extends AppCompatActivity {
                                               port,
                                               width,
                                               height,
-                                              (int) event.getX(),
-                                              (int) event.getY(),
+                                              (int) event.getX() < 0 ? 0 : (int) event.getX(),
+                                              (int) event.getY() < 0 ? 0 : (int) event.getY(),
                                               0,
                                               seekBar.getProgress());
                      myClient.execute();
