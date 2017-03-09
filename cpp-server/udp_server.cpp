@@ -22,44 +22,7 @@
 
 #define PORTNO 5001
 
-void initializePins() {
-   softPwmCreate(PIN_00, 0x00, 0xFF);
-   softPwmCreate(PIN_01, 0x00, 0xFF);
-   softPwmCreate(PIN_02, 0x00, 0xFF);
-   softPwmCreate(PIN_03, 0x00, 0xFF);
-   softPwmCreate(PIN_04, 0x00, 0xFF);
-   softPwmCreate(PIN_05, 0x00, 0xFF);
-   softPwmCreate(PIN_06, 0x00, 0xFF);
-   softPwmCreate(PIN_07, 0x00, 0xFF);
-   softPwmCreate(PIN_08, 0x00, 0xFF);
-   softPwmCreate(PIN_09, 0x00, 0xFF);
-   
-   softPwmCreate(PIN_10, 0x00, 0xFF);
-   softPwmCreate(PIN_11, 0x00, 0xFF);
-   softPwmCreate(PIN_12, 0x00, 0xFF);
-   softPwmCreate(PIN_13, 0x00, 0xFF);
-   softPwmCreate(PIN_14, 0x00, 0xFF);
-   softPwmCreate(PIN_15, 0x00, 0xFF);
-   softPwmCreate(PIN_16, 0x00, 0xFF);
-   softPwmCreate(PIN_17, 0x00, 0xFF);
-   softPwmCreate(PIN_18, 0x00, 0xFF);
-   softPwmCreate(PIN_19, 0x00, 0xFF);
-
-   softPwmCreate(PIN_20, 0x00, 0xFF);
-   softPwmCreate(PIN_21, 0x00, 0xFF);
-   softPwmCreate(PIN_22, 0x00, 0xFF);
-   softPwmCreate(PIN_23, 0x00, 0xFF);
-   softPwmCreate(PIN_24, 0x00, 0xFF);
-   softPwmCreate(PIN_25, 0x00, 0xFF);
-   softPwmCreate(PIN_26, 0x00, 0xFF);
-   softPwmCreate(PIN_27, 0x00, 0xFF);
-   softPwmCreate(PIN_28, 0x00, 0xFF);
-   softPwmCreate(PIN_29, 0x00, 0xFF);
-
-   softPwmCreate(PIN_30, 0x00, 0xFF);
-   softPwmCreate(PIN_31, 0x00, 0xFF);
-
-}
+void initializePins() {}
 
 int rangeTransform(int oldVal, int oldRange, int newRange) {
    // OldRange = (OldMax - OldMin)  

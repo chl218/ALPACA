@@ -37,12 +37,20 @@
 
 // sets up all the row and column pins to output
 void initializePins() {
-    pinMode(PIN_C_B0, OUTPUT);
-    pinMode(PIN_C_B1, OUTPUT);
-    pinMode(PIN_C_B2, OUTPUT);
-    pinMode(PIN_C_B3, OUTPUT);
-    pinMode(PIN_C_B4, OUTPUT);
-    pinMode(PIN_C_B5, OUTPUT);
+    pinMode(PIN_C00, OUTPUT);
+    pinMode(PIN_C01, OUTPUT);
+    pinMode(PIN_C02, OUTPUT);
+    pinMode(PIN_C03, OUTPUT);
+    pinMode(PIN_C04, OUTPUT);
+    pinMode(PIN_C05, OUTPUT);
+    pinMode(PIN_C06, OUTPUT);
+    pinMode(PIN_C07, OUTPUT);
+    pinMode(PIN_C08, OUTPUT);
+    pinMode(PIN_C09, OUTPUT);
+    pinMode(PIN_C10, OUTPUT);
+    pinMode(PIN_C11, OUTPUT);
+    pinMode(PIN_C12, OUTPUT);
+    pinMode(PIN_C13, OUTPUT);
     pinMode(PIN_C14, OUTPUT);
     pinMode(PIN_C15, OUTPUT);
 
@@ -188,192 +196,94 @@ void selectR(int sel) {
 
 // Selects the column to light up
 void selectC(int sel) {
-    if ( sel > NUM_OF_COLS ) {
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
-    }
+    digitalWrite(PIN_C00, LOW);
+    digitalWrite(PIN_C01, LOW);
+    digitalWrite(PIN_C02, LOW);
+    digitalWrite(PIN_C03, LOW);
+    digitalWrite(PIN_C04, LOW);
+    digitalWrite(PIN_C05, LOW);
+    digitalWrite(PIN_C06, LOW);
+    digitalWrite(PIN_C07, LOW);
+    digitalWrite(PIN_C08, LOW);
+    digitalWrite(PIN_C09, LOW);
+    digitalWrite(PIN_C10, LOW);
+    digitalWrite(PIN_C11, LOW);
+    digitalWrite(PIN_C12, LOW);
+    digitalWrite(PIN_C13, LOW);
+    digitalWrite(PIN_C14, LOW);
+    digitalWrite(PIN_C15, LOW);
+    if ( sel > NUM_OF_COLS ) { return; }
     else {
     switch(sel) {
     case 0:
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C00, HIGH);
         break;
     case 1:
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, HIGH);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C01, HIGH);
         break;
     case 2:
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, HIGH);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C02, HIGH);
         break;
     case 3:
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, HIGH);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C03, HIGH);
         break;
     case 4:
-        digitalWrite(PIN_C_B0, HIGH);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, HIGH);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C04, HIGH);
         break;
     case 5:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, HIGH);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C05, HIGH);
         break;
     case 6:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, HIGH);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C06, HIGH);
         break;
     case 7:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, HIGH);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C07, HIGH);
         break;
     case 8:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, HIGH);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, HIGH);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C08, HIGH);
         break;
     case 9:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, HIGH);
-        digitalWrite(PIN_C_B3, HIGH);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C09, HIGH);
         break;
     case 10:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, HIGH);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, HIGH);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C10, HIGH);
         break;
     case 11:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, HIGH);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, HIGH);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C11, HIGH);
         break;
     case 12:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, HIGH);
-        digitalWrite(PIN_C_B4, HIGH);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C12, HIGH);
         break;
     case 13:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, HIGH);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, HIGH);
-        digitalWrite(PIN_C14, LOW);
-        digitalWrite(PIN_C15, LOW);
+        digitalWrite(PIN_C13, HIGH);
         break;
     case 14:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
         digitalWrite(PIN_C14, HIGH);
-        digitalWrite(PIN_C15, LOW);
         break;
     case 15:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
-        digitalWrite(PIN_C14, LOW);
         digitalWrite(PIN_C15, HIGH);
         break;
     default:
-        digitalWrite(PIN_C_B0, LOW);
-        digitalWrite(PIN_C_B1, LOW);
-        digitalWrite(PIN_C_B2, LOW);
-        digitalWrite(PIN_C_B3, LOW);
-        digitalWrite(PIN_C_B4, LOW);
-        digitalWrite(PIN_C_B5, LOW);
+        digitalWrite(PIN_C00, LOW);
+        digitalWrite(PIN_C01, LOW);
+        digitalWrite(PIN_C02, LOW);
+        digitalWrite(PIN_C03, LOW);
+        digitalWrite(PIN_C04, LOW);
+        digitalWrite(PIN_C05, LOW);
+        digitalWrite(PIN_C06, LOW);
+        digitalWrite(PIN_C07, LOW);
+        digitalWrite(PIN_C08, LOW);
+        digitalWrite(PIN_C09, LOW);
+        digitalWrite(PIN_C10, LOW);
+        digitalWrite(PIN_C11, LOW);
+        digitalWrite(PIN_C12, LOW);
+        digitalWrite(PIN_C13, LOW);
         digitalWrite(PIN_C14, LOW);
         digitalWrite(PIN_C15, LOW);
         break;
     }
     }
 }
-
 // Turns on the LED at specified row and column
 // note: Delay not accounted for, needs to include delay manually 
 //       after call to select(), usually delay(2) is good enough
