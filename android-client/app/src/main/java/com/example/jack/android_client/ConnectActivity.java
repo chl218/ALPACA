@@ -92,6 +92,7 @@ public class ConnectActivity extends AppCompatActivity {
       editTextDemo2 = (EditText)findViewById(R.id.editTextDemo2);
       editTextDemo3 = (EditText)findViewById(R.id.editTextDemo3);
 
+      // start draw activity
       buttonConnect.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -106,6 +107,7 @@ public class ConnectActivity extends AppCompatActivity {
          }
       });
 
+      // demo without internet
       buttonSkip.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {

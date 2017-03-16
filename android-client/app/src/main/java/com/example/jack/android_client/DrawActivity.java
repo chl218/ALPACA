@@ -91,6 +91,7 @@ public class DrawActivity extends AppCompatActivity {
             int currYCrd = (int)event.getY();
 
             switch (action) {
+               // screen is pressed
                case MotionEvent.ACTION_DOWN:
                   xCrd.setText(String.valueOf(currXCrd));
                   yCrd.setText(String.valueOf(currYCrd));
@@ -107,6 +108,7 @@ public class DrawActivity extends AppCompatActivity {
                      myClient.execute();
                   }
                   break;
+               // movement detected
                case MotionEvent.ACTION_MOVE:
                   xCrd.setText(String.valueOf((int) event.getX()));
                   yCrd.setText(String.valueOf((int) event.getY()));
@@ -122,6 +124,7 @@ public class DrawActivity extends AppCompatActivity {
                      myClient.execute();
                   }
                   break;
+               // screen is unpressed
                case MotionEvent.ACTION_UP:
                   xCrd.setText(String.valueOf((int) event.getX()));
                   yCrd.setText(String.valueOf((int) event.getY()));
@@ -143,6 +146,7 @@ public class DrawActivity extends AppCompatActivity {
          }
       });
 
+      // change led gradient
       seekBar = (SeekBar)findViewById(R.id.seekBar1);
       seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
          @Override

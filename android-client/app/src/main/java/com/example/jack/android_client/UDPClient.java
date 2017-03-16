@@ -62,6 +62,7 @@ public class UDPClient extends AsyncTask<Void, Void, Void> {
       finally {
          if (socket != null) {
             try {
+
                socket.close();
             } catch (Exception e) {
                e.printStackTrace();
